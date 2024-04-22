@@ -1,0 +1,18 @@
+syms x a b c s y;
+% eqn = (  ((5-x)^2)    -  ((3+x)^2)  )^0.5  *  (3+x) == 12
+ 
+%  solve(eqn)
+
+% fplot([lhs(eqn) rhs(eqn)], [-0.8 0.1])
+% ylim([11.9 12.5])
+% 
+% x = (0:0.1:8*pi);
+% y = sin(x);
+% plot(x,y)
+
+
+eqn =  5 * x ^ 2 - 4 * x + 8 == 50
+
+solve(eqn)
+
+fplot([lhs(eqn) rhs(eqn)], [-10 10])
