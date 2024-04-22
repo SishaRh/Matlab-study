@@ -1,0 +1,12 @@
+
+figure 
+subplot(2,3,1)  % 2*3格，第一个位置
+boxplot(data.pH,data.Date)
+subplot(2,3,2)
+boxplot(data.NH4,data.Date)
+subplot(2,3,3)
+boxplot(data.TN,data.Date)
+subplot(2,3,4)
+boxplot(data.TP,data.Date)
+subplot(2,3,5)
+boxplot(data.COD,data.Date)
