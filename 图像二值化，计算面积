@@ -1,0 +1,31 @@
+f = imread("C:\Users\Lenovo\Desktop\Lab\9de91de.jpg");
+%f=imread('Fig0409(a)(bld).tif');
+figure(1);
+imshow(f);
+title('原图');
+%方法一
+figure(2);
+bw1= im2bw(f,0.5);%使用默认值0.5，此函数matlab不推荐
+imshow(bw1)
+title('使用0.5作为门槛时的二值图像');
+
+%方法二
+figure(3);
+level=graythresh(f) %使用graythresh计算灰度阈值
+bw2=im2bw(f,level);
+imshow(bw2);
+title('通过graythresh计算灰度门槛时的二值图像');
+
+%方法三
+figure(3)
+g = rgb2gray(f);%转为灰度图
+imshow(g)
+bw3 = imbinarize(g);%转为二值图，matlab推荐函数
+imshow(bw3);
+
+
+imshowpair(f,bw2,"montage") %
+
+%imshow(bw)
+bwarea(bw2)  %图像面积计算
+
