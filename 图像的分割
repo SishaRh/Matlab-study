@@ -1,0 +1,23 @@
+Comparing Row Sums
+Instructions are in the task pane to the left. Complete and submit each task one at a time.
+
+Tasks 1, 2, and 3
+This code loads and processes an image. Do not edit the code. Use the dropdown to select which image to process during each task.
+imgFile = 'testimages/IMG_002.jpg'; 
+I = imread(imgFile);
+gs = im2gray(I);
+gsAdj = imadjust(gs);
+BW = imbinarize(gsAdj,"adaptive","ForegroundPolarity","dark");
+imshowpair(I,BW,"montage")
+S = sum(BW,2);
+plot(S)
+imgFile = 'testimages/IMG_002.jpg'; 
+I = imread(imgFile);
+gs = im2gray(I);
+gsAdj = imadjust(gs);
+BW = imbinarize(gsAdj,"adaptive","ForegroundPolarity","dark");
+imshowpair(I,BW,"montage")
+S = sum(BW,2);
+plot(S)
+
+
