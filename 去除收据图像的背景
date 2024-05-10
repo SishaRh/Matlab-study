@@ -9,6 +9,7 @@ imshowpair(gs,BW,"montage")
 
 SE = strel("disk",20);  %创建数据结构
 Ibg = imclose(gs,SE); %对图像进行闭运算将增强并连接较亮的背景，去除较细的暗文本。
+%BW = imbothat(gs,SE);
 imshow(Ibg)  %
 gsSub = Ibg - gs;
 imshow(gsSub)
