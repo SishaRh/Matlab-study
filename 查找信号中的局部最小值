@@ -1,0 +1,42 @@
+I = imread('testimages/IMG_008.jpg'); % Load an image
+[S,BW,BWstripes] = processImage(I); % Process the image to obtain a signal
+montage({I,BW,BWstripes}) % Show the image
+
+
+% Find local minima
+minIndices = islocalmin(S,"MinProminence",70,"ProminenceWindow",25);
+
+% Display results
+figure
+plot(S,"SeriesIndex",6,"DisplayName","Input data")
+hold on
+
+% Plot local minima
+scatter(find(minIndices),S(minIndices),"v","filled","SeriesIndex",3, ...
+    "DisplayName","Local minima")
+title("Number of extrema: " + nnz(minIndices))
+hold off
+legend
+
+
+function [signal,Ibw,stripes] = processImage(img)
+    % This function processes an image using the algorithm 
+    % developed in previous chapters.
+    
+    gs = im2gray(img);
+    gs = imadjust(gs);
+    
+    H = fspecial("average",3);
+    gssmooth = imfilter(gs,H,"replicate");
+    
+    SE = strel("disk",8);  
+    Ibg = imclose(gssmooth, SE);
+    Ibgsub =  Ibg - gssmooth;
+    Ibw = ~imbinarize(Ibgsub);
+    
+    SE = strel("rectangle",[3 25]);
+    stripes = imopen(Ibw, SE);
+    
+    signal = sum(stripes,2);
+    
+end
