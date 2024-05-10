@@ -1,0 +1,16 @@
+I = imread("202207211455151.jpg") ;
+gs = im2gray(I); %转为灰度图像
+gs = imadjust(gs); %灰度对比度拉伸
+H = fspecial("average",3); %创建背景
+gs = imfilter(gs,H,"replicate");  %滤波
+BW = imbinarize(gs,"adaptive","ForegroundPolarity","dark"); %二值化
+imshowpair(gs,BW,"montage")
+
+
+SE = strel("disk",20);  %创建数据结构
+Ibg = imclose(gs,SE); %对图像进行闭运算将增强并连接较亮的背景，去除较细的暗文本。
+imshow(Ibg)  %
+gsSub = Ibg - gs;
+imshow(gsSub)
+BWsub = ~ imbinarize(gsSub); %结果反转
+imshow(BWsub)
