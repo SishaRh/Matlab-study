@@ -1,0 +1,41 @@
+ds = imageDatastore("testimages");
+nFiles = numel(ds.Files);
+isReceipt = false(1,nFiles);
+
+n = nFiles;
+for k = 1:n
+I = readimage(ds,k);
+isReceipt(k) = classifyImage(I);
+end
+
+receiptFiles = ds.Files(isReceipt); %使用逻辑数组 isReceipt 作为索引来提取分类为收据的图像的文件名。ds.Files(isReceipt)
+
+montage(receiptFiles) % 显示分类为收据的所有图像。
+
+function isReceipt = classifyImage(I)
+    % This function processes an image using the algorithm developed in
+    % previous chapters and classifies the image as receipt or non-receipt
+    
+    % Processing
+    gs = im2gray(I);
+    gs = imadjust(gs);
+    
+    H = fspecial("average",3);
+    gssmooth = imfilter(gs,H,"replicate");
+    
+    SE = strel("disk",8);  
+    Ibg = imclose(gssmooth, SE);
+    Ibgsub =  Ibg - gssmooth;
+    Ibw = ~imbinarize(Ibgsub);
+    
+    SE = strel("rectangle",[3 25]);
+    stripes = imopen(Ibw, SE);
+    
+    signal = sum(stripes,2);  
+
+    % Classification
+    minIndices = islocalmin(signal,"MinProminence",70,"ProminenceWindow",25); 
+    nMin = nnz(minIndices);
+    isReceipt = nMin >= 9;
+    
+end
