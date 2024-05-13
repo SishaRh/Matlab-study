@@ -1,0 +1,38 @@
+ds = imageDatastore('testimages') %读取/建立图像数据库
+dataFilenames = ds.Files %查看文件属性
+nFiles = numel(dataFilenames) %计算文件数量
+I = readimage(ds,1); % 读取ds中第1张图片；
+isReceipt = classifyImage(I)  %图像分类
+
+
+
+
+
+function isReceipt = classifyImage(I)
+    % This function processes an image using the algorithm developed in
+    % previous chapters and classifies the image as receipt or non-receipt
+    
+    % Processing
+    gs = im2gray(I);
+    gs = imadjust(gs);
+    
+    mask = fspecial("average",3);
+    gsSmooth = imfilter(gs,mask,"replicate");
+    
+    SE = strel("disk",8);  
+    Ibg = imclose(gsSmooth, SE);
+    Ibgsub =  Ibg - gsSmooth;
+    Ibw = ~imbinarize(Ibgsub);
+    
+    SE = strel("rectangle",[3 25]);
+    stripes = imopen(Ibw, SE);
+    
+    signal = sum(stripes,2);  
+
+    % Classification
+    minIndices = islocalmin(signal,"MinProminence",70,"ProminenceWindow",25); 
+    nMin = nnz(minIndices);
+    isReceipt = nMin >= 9;
+    
+end
+
