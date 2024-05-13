@@ -12,6 +12,10 @@ receiptFiles = ds.Files(isReceipt); %使用逻辑数组 isReceipt 作为索引�
 
 montage(receiptFiles) % 显示分类为收据的所有图像。
 
+receiptFiles =  ds.Files(~ isReceipt); %提取非特征图像
+montage(receiptFiles)
+
+
 function isReceipt = classifyImage(I)
     % This function processes an image using the algorithm developed in
     % previous chapters and classifies the image as receipt or non-receipt
