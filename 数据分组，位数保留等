@@ -39,3 +39,17 @@ filename = "C:\Users\wrong\Desktop\Da\output.xlsx" %建立文件名
 writetable(D1s,filename,'Sheet',"1月24日数据")
 writetable(D2s,filename,'Sheet',"4月25日数据")
 %d1c = groupsummary(XC20240629Mat,["Date","Tr"],["mean","std"])
+
+
+
+D = D1s(1:10,1)
+Dm =D2s(1:10,[3 5 7 9]) - D1s(1:10,[3 5 7 9]);
+D = [D,Dm]
+
+%bar(D.mean_pH);
+x =D.Tr
+x = [x;x;x]
+
+bar([D.mean_P;D.mean_K;D.mean_N])
+
+set(gca, 'XTick', 1:length(x), 'XTickLabel', x);
