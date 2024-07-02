@@ -1,0 +1,84 @@
+分组
+gsDa = groupsummary(data,"date", "month");
+Cal = data(:,[3,5:end]);
+gsID = groupsummary(Cal,"ID","all");
+
+数据存储
+filename = '……' %建立文件名
+writetable(gsID,filename,'Sheet',"su",'Range','D1') %从D1列开始备份数据
+writetable(data,filename,'Sheet',"data",'Range','D1')
+
+
+
+x = table2array(data(:,5:end));
+y = table2array(data(:,3));
+x1 = x(:,1);
+
+p = anova1(x1,y)
+boxplot(x1,y)
+box off
+title('Box plot showing NH_4^+-N concentrations for each of water that were sampled monthly')
+xticklabels(name)
+ylabel('NH_4^+-N concentrations (mg L^{-1}）')
+
+
+各指标按监测点作图
+
+boxplot(x(:,2),y)
+xticklabels(name)
+ylabel('TP concentrations (mg L^{-1}）')
+box off
+
+boxplot(x(:,3),y)
+xticklabels(name)
+ylabel('COD concentrations (mg L^{-1}）')
+box off
+
+boxplot(x(:,4),y)
+xticklabels(name)
+ylabel('pH')
+box off
+
+boxplot(x(:,5),y)
+xticklabels(name)
+ylabel('TN concentrations (g L^{-1}）')
+box off
+
+
+各指标按照季节
+
+dataS0 = table2array(data(:,5:end));
+
+季节与数据对variable
+str = "春";
+r1 = str(ones(11,1),:);
+str = "夏";
+r2 = str(ones(33,1),:);
+str = "秋";
+r3 = str(ones(33,1),:);
+str = "冬";
+r4 = str(ones(33,1),:);
+r =[r1;r2;r3;r4];
+
+boxplot 不同季节
+boxplot(dataS0(:,1),r)
+ylabel('NH_4^+-N concentrations (mg L^{-1}）')
+boxplot(dataS0(:,2),r)
+ylabel('TP concentrations (mg L^{-1}）')
+boxplot(dataS0(:,3),r)
+ylabel('COD concentrations (mg L^{-1}）')
+boxplot(dataS0(:,4),r)
+ylabel('pH')
+boxplot(dataS0(:,5),r)
+ylabel('TN concentrations (g L^{-1}）')
+
+pearson 相关系数
+% plotmatrix(dataS0)
+c = corrcoef(dataS0,'Rows','pairwise');
+c1 =array2table(c)
+
+存储文件
+%filename = '……' %建立文件名
+writetable(c1,filename,'Sheet',"xgxs",'Range','D1') %从D1列开始备份数据
+
+
