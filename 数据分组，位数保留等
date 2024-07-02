@@ -1,0 +1,41 @@
+clear
+
+opts = spreadsheetImportOptions("NumVariables", 9);
+
+% 指定工作表和范围
+opts.Sheet = "Sheet1";
+opts.DataRange = "A2:I70";
+
+% 指定列名称和类型
+opts.VariableNames = ["No", "Date", "Tr", "FNo", "pH", "P", "K", "N", "OM"];
+opts.VariableTypes = ["double", "datetime", "categorical", "double", "double", "double", "double", "double", "double"];
+
+% 指定变量属性
+opts = setvaropts(opts, "Tr", "EmptyFieldRule", "auto");
+
+% 导入数据
+XC20240629Mat = readtable("   ", opts, "UseExcel", false)
+
+清除临时变量
+clear opts
+数据概览
+summary(XC20240629Mat)
+groupsummary(XC20240629Mat,"Date")
+D1 1月24日数据，D2 4 月25日数据(抽取数据）
+D1 = XC20240629Mat([1:28,36:38],[3,5:9])
+D2 = XC20240629Mat(39:end,[3,5:9])
+
+% d3 = XC20240629Mat(XC20240629Mat.Date == datetime(2024,1,24),:)
+% d4 = XC20240629Mat(XC20240629Mat.Date == datetime(2024,4,25),:)
+
+D1s = groupsummary(D1,"Tr",["mean","std"],vartype("numeric")) 
+D2s = groupsummary(D2,"Tr",["mean","std"],vartype("numeric"))
+D1s(:,[4 6 8 10]) = round(D1s(:,[4 6 8 10]),4)    %小数位数保留
+D1s(:,[3 5 7 9]) = round(D1s(:,[3 5 7 9]),2)      %小数位数保留
+
+
+filename = "C:\Users\wrong\Desktop\Da\output.xlsx" %建立文件名
+%writetable(c1,filename,'Sheet',"xgxs",'Range','D1') %从D1列开始备份数据
+writetable(D1s,filename,'Sheet',"1月24日数据")
+writetable(D2s,filename,'Sheet',"4月25日数据")
+%d1c = groupsummary(XC20240629Mat,["Date","Tr"],["mean","std"])
