@@ -1,0 +1,29 @@
+clear
+opts = spreadsheetImportOptions("NumVariables", 5);
+
+% 指定工作表和范围
+opts.Sheet = "Sheet1";
+opts.DataRange = "A2:E1395";
+
+% 指定列名称和类型
+opts.VariableNames = ["VarName1", "gcm", "gcm1", "gcm2", "gcm3"];
+opts.VariableTypes = ["string", "double", "double", "double", "double"];
+
+% 指定变量属性
+opts = setvaropts(opts, "VarName1", "WhitespaceRule", "preserve");
+opts = setvaropts(opts, "VarName1", "EmptyFieldRule", "auto");
+
+% 导入数据
+YSD = readtable("***", opts, "UseExcel", false)
+
+summary(YSD);
+[min_g1,ID] = min(YSD(:,"gcm"));
+YSDA = table2array(YSD(:,2:end));
+g1 = YSD(:,"gcm");
+g2 = YSD(:,'gcm1');
+g1 = table2array(g1);
+% g2 = table2array(g2)
+%bar(g1)
+histogram(g1)
+%histogram(g2)
+histogram(YSDA(:,1))
