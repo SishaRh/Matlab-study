@@ -1,0 +1,3 @@
+
+teamWins = table(team,w)
+stats = array2table(WDL,VariableNames=["Wins" "Draws" "Losses"])
