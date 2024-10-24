@@ -1,0 +1,21 @@
+first10X = tbl.VariableX(1:10)
+
+
+%
+EPL = readtable("EPLresults.csv",TextType="string");
+EPL = sortrows(EPL,["HomeWins" "AwayWins"],"descend")
+
+Task 1
+hw = EPL.HomeWins
+aw = EPL.AwayWins
+
+Task 2
+homeAdv = hw>aw
+numHA = nnz(homeAdv)
+numHA2 = sum(homeAdv)
+
+
+Task 3
+noHAteams = EPL.Team(~homeAdv)
+
+noHAteams2 = EPL.Team(hw <= aw)
