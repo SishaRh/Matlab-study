@@ -1,0 +1,6 @@
+EPL = renamevars(EPL,"Payroll_M__","Payroll")
+EPL = convertvars(EPL,"Manager","string")
+EPL = convertvars(EPL,@iscellstr,"string")
+EPL.ManagerHireDate = datetime(EPL.ManagerHireDate, ...
+    InputFormat = "dd MMM yyyy", ...
+    Locale = "en_GB")
