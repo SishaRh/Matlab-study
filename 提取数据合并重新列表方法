@@ -1,0 +1,51 @@
+Table Properties
+Instructions are in the task pane to the left. Complete and submit each task one at a time.
+
+This code loads and displays a table of English Premier League team results.
+load EPLResults.mat
+EPL
+
+Task 1
+props = EPL.Properties
+
+
+Task 2
+vnames = EPL.Properties.VariableNames
+
+
+Task 3
+ishomestat = startsWith(vnames,"Home")
+
+
+Task 4
+homestats = EPL{:,ishomestat}
+
+
+Task 5
+isawaystat = startsWith(EPL.Properties.VariableNames,"Away")
+awaystats = EPL{:,isawaystat}
+
+Task 6
+totalstats = homestats + awaystats
+
+
+Task 7
+v =startsWith(vnames,"Home")
+hnames = vnames(:,startsWith(vnames,"Home"))  %allways use method.
+hnames = vnames{:,startsWith(vnames,"Home")}  %what's the different between {} and []?
+
+Task 8
+tnames = replace(hnames, ...
+    "Home","Total")
+
+
+Task 9
+
+EPL{:,tnames} = totalstats
+
+
+Further Practice
+myText = string(myText)
+
+vnames = string(EPL.Properties.VariableNames)
+EPL.Properties.VariableNames = vnames + "_2015"
