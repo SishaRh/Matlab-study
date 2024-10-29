@@ -10,7 +10,7 @@ props = EPL.Properties
 
 
 Task 2
-vnames = EPL.Properties.VariableNames
+vnames = EPL.Properties.VariableNames   %此处为文本函数使用字符向量元胞数据组或字符串形成文本
 
 
 Task 3
@@ -45,7 +45,7 @@ EPL{:,tnames} = totalstats
 
 
 Further Practice
-myText = string(myText)
+%myText = string(myText)
 
-vnames = string(EPL.Properties.VariableNames)
+vnames = string(EPL.Properties.VariableNames)  %此处为使用string函数姜任何文本数组转换为字符串组
 EPL.Properties.VariableNames = vnames + "_2015"
