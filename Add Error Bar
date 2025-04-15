@@ -1,0 +1,6 @@
+bar(M.V,M.mean_Asp)
+hold on
+er = errorbar(M.V,M.mean_Asp,M.std_Asp.*-1,M.std_Asp);
+er.Color = [0 0 0]
+er.LineStyle = 'none';
+hold off
